@@ -22,9 +22,7 @@ def process_types(types)
       $output << TypeIVarResult.new(type, type.instance_vars.size)
     end
 
-    if type.responds_to?(:types)
-      process_types(type.types.values)
-    end
+    type.types?.try { |inner_types| process_types(inner_types.values) }
   end
 end
 
