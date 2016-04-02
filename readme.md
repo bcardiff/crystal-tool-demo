@@ -12,12 +12,19 @@ The tool in `tool-ivars-count` shows all the types used in a program ordered by 
 2. Execute
 
 ```
-$ CRYSTAL_CONFIG_PATH=/usr/local/Cellar/crystal-lang/0.14.2/src crystal tool-ivars-count.cr -- sample.cr
+$ env CRYSTAL_CONFIG_PATH=$(crystal env CRYSTAL_PATH) crystal tool-ivars-count.cr -- sample.cr
 ```
 
-The program `tool-vars-count.cr` takes a filename input (`sample.cr` in the above example) and **compiles** it. This means to tool is a crystal compiler. There are some details of how crystal compiler is shipped that force us to point the source of the crystal std. The std shipped with the crystal compiler can be used, hence `CRYSTAL_CONFIG_PATH=/usr/local/Cellar/crystal-lang/0.14.2/src` at the beginning of the command.
+The program `tool-vars-count.cr` takes a filename input (`sample.cr` in the above example) and **compiles** it. This means the tool is a crystal compiler. There are some details of how crystal compiler is shipped that force us to point the source of the crystal std. This is done by setting `CRYSTAL_CONFIG_PATH`.
+
+In case you want to use crystal HEAD or working copy you can
+
+```
+$ env CRYSTAL_CONFIG_PATH=$(path/to/crystal env CRYSTAL_PATH) path/to/crystal tool-ivars-count.cr -- sample.cr
+```
 
 In order to build the tool once and run it multiple times:
 
-1. `$ CRYSTAL_CONFIG_PATH=/usr/local/Cellar/crystal-lang/0.14.2/src crystal tool-ivars-count.cr`
+1. `$ env CRYSTAL_CONFIG_PATH=$(crystal env CRYSTAL_PATH) crystal tool-ivars-count.cr`
 2. `$ ./tool-ivars-count sample.cr`
+3. `$ ./tool-ivars-count other_sample.cr`
