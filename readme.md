@@ -12,7 +12,8 @@ The tool in `tool-ivars-count` shows all the types used in a program ordered by 
 2. Execute
 
 ```
-$ env CRYSTAL_CONFIG_PATH=$(crystal env CRYSTAL_PATH) crystal tool-ivars-count.cr -- sample.cr
+$ export crystal=crystal # or /path/to/crystal
+$ env CRYSTAL_CONFIG_PATH=$($crystal env CRYSTAL_PATH) $crystal tool-ivars-count.cr -- sample.cr
 ```
 
 The program `tool-vars-count.cr` takes a filename input (`sample.cr` in the above example) and **compiles** it. This means the tool is a crystal compiler. There are some details of how crystal compiler is shipped that force us to point the source of the crystal std. This is done by setting `CRYSTAL_CONFIG_PATH`.
