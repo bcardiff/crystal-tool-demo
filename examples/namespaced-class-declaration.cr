@@ -1,6 +1,6 @@
 class Q::Person
-  property name
-  property age
+  property name : String
+  property age : Int32
 
   def initialize(@name, @age)
   end

@@ -1,4 +1,20 @@
-# env CRYSTAL_CONFIG_PATH=$($crystal env CRYSTAL_PATH) $crystal tool-top-level-types.cr -- ../master/spec/std_spec.cr ../master/spec/
+# Shows the top level symbol names and it's kind.
+#
+# The kinds are: method, macro, [generic] struct, [generic] class,  [generic] module,
+# enum, exception, annotation, constant, etc.
+#
+# Usage:
+#
+# ```
+# $ top-level-types <path/to/compile.cr> <path/to/ignore>
+# ```
+#
+# Symbols declared in <path/to/ignore> are not considered.
+# This is useful when compiling specs but not wanting symbols declared only for specs.
+#
+# ```
+# $ top-level-types <path/to/compile.cr> <path/to/ignore>
+# ```
 
 require "compiler/crystal/**"
 include Crystal
@@ -24,7 +40,7 @@ exception_base = result.program.exception
 # start with top level types and modules
 result.program.types.values.each do |type|
   locations = type.locations
-  next if locations && ignore_locations && locations.all?(&.original_location.to_s.starts_with?(ignore_locations))
+  next if locations && ignore_locations && locations.all?(&.expanded_location.to_s.starts_with?(ignore_locations))
 
   kind = case
          when type.covariant?(exception_base)
@@ -40,7 +56,7 @@ if (program_defs = result.program.defs)
   program_defs.each do |name, defs|
     next unless defs.any? { |_def|
                   !((location = _def.def.location) && ignore_locations &&
-                  location.original_location.to_s.starts_with?(ignore_locations))
+                  location.expanded_location.to_s.starts_with?(ignore_locations))
                 }
     output << TopLevelResult.new(name: name, kind: "method", locations: nil)
   end
@@ -50,7 +66,7 @@ if (program_macros = result.program.macros)
   program_macros.each do |name, macros|
     next unless macros.any? { |_macro|
                   !((location = _macro.location) && ignore_locations &&
-                  location.original_location.to_s.starts_with?(ignore_locations))
+                  location.expanded_location.to_s.starts_with?(ignore_locations))
                 }
     output << TopLevelResult.new(name: name, kind: "macro", locations: nil)
   end
@@ -65,7 +81,7 @@ output.each do |e|
 
   # if ls = e.locations
   #   ls.each do |l|
-  #     l = l.original_location
+  #     l = l.expanded_location
   #     next if l.to_s.starts_with?(ignore_locations)
   #     puts "  #{l}"
   #   end

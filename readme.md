@@ -4,28 +4,25 @@ This repo contains sample code to demonstrate existing crystal tools.
 
 It also shows how to create your own tools that relay con crystal compile.
 
-The tool in `tool-ivars-count` shows all the types used in a program ordered by the amount of instance variables.
+The tool in `tool-ivars-count` shows types in a program ordered by the amount of instance variables.
 
 ## How to use it
 
-1. Install crystal with llvm
-2. Execute
+1. Install Crystal
+2. Install llvm
+3. Ensure llvm-config is in the path or set `LLVM_CONFIG` environment variable
+4. Build the tool `$ make bin/ivars-count`
+5. Use the tool in your codebase `$ bin/ivars-count examples/namespaced-class-declaration.cr`
 
-```
-$ export crystal=crystal # or /path/to/crystal
-$ env CRYSTAL_CONFIG_PATH=$($crystal env CRYSTAL_PATH) $crystal tool-ivars-count.cr -- sample.cr
-```
-
-The program `tool-vars-count.cr` takes a filename input (`sample.cr` in the above example) and **compiles** it. This means the tool is a crystal compiler. There are some details of how crystal compiler is shipped that force us to point the source of the crystal std. This is done by setting `CRYSTAL_CONFIG_PATH`.
+The `ivars-count` program takes a filename input (`examples/namespaced-class-declaration.cr` in the above example) and **compiles** it. This means the tool _is a Crystal compiler_.
 
 In case you want to use crystal HEAD or working copy you can
 
 ```
-$ env CRYSTAL_CONFIG_PATH=$(path/to/crystal env CRYSTAL_PATH) path/to/crystal tool-ivars-count.cr -- sample.cr
+$ make bin/ivars-count CRYSTAL=path/to/crystal
 ```
 
-In order to build the tool once and run it multiple times:
+## Available tools
 
-1. `$ env CRYSTAL_CONFIG_PATH=$(crystal env CRYSTAL_PATH) crystal tool-ivars-count.cr`
-2. `$ ./tool-ivars-count sample.cr`
-3. `$ ./tool-ivars-count other_sample.cr`
+* **ivars-count**: types in a program ordered by the amount of instance variables
+* **top-level**: top level symbol names and it's kind
