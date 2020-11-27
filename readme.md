@@ -26,3 +26,4 @@ $ make bin/ivars-count CRYSTAL=path/to/crystal
 
 * **ivars-count**: types in a program ordered by the amount of instance variables
 * **top-level**: top level symbol names and it's kind
+* **unused**: report unused symbols

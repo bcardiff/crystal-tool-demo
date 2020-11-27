@@ -32,3 +32,4 @@ clean:
 
 $(eval $(call tool,src/ivars-count.cr,ivars-count))
 $(eval $(call tool,src/top-level.cr,top-level))
+$(eval $(call tool,src/unused.cr,unused))
