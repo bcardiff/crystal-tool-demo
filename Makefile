@@ -24,12 +24,12 @@ $(tool_output): $(tool_source)
 $(eval ALL_TOOLS += $(tool_output))
 endef
 
+$(eval $(call tool,src/ivars-count.cr,ivars-count))
+$(eval $(call tool,src/top-level.cr,top-level))
+$(eval $(call tool,src/unused.cr,unused))
+
 .PHONY: all
 all: $(ALL_TOOLS)
 
 clean:
 	rm -f bin/*
-
-$(eval $(call tool,src/ivars-count.cr,ivars-count))
-$(eval $(call tool,src/top-level.cr,top-level))
-$(eval $(call tool,src/unused.cr,unused))
