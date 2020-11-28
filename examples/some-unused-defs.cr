@@ -51,3 +51,15 @@ E.new.r = 42
 F(Int32).new.h
 F.j
 K.new(0, "")
+
+spawn bar
+
+spawn baz(0)
+
+->{
+  baz(0)
+}.call
+
+BAR = bar
+
+BAR

@@ -88,6 +88,11 @@ class RemoveUsedDefsVisitor < Visitor
   end
 
   def visit(node : Call)
+    if (obj = node.obj) && obj.is_a?(ProcLiteral) && node.name == "call"
+      @untyped_defs.delete(obj.def)
+      obj.def.body.accept(self)
+    end
+
     node.target_defs.try do |defs|
       defs.each do |typed_def|
         typed_def.accept(self)
