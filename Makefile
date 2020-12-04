@@ -27,6 +27,7 @@ endef
 $(eval $(call tool,src/ivars-count.cr,ivars-count))
 $(eval $(call tool,src/top-level.cr,top-level))
 $(eval $(call tool,src/unused.cr,unused))
+$(eval $(call tool,src/reorder-ivars.cr,reorder-ivars))
 
 .PHONY: all
 all: $(ALL_TOOLS)
