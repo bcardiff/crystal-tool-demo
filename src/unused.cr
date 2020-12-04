@@ -29,10 +29,6 @@
 require "compiler/crystal/**"
 include Crystal
 
-macro dd!(x)
-  pp!({ {{x}}.class , typeof({{x}}) })
-end
-
 # NOTE: counting using the global hash does not work because a defs with no args has always a typed def.
 #                 untyped_def => typed_defs
 # TYPED_DEFS = {} of Def => Set(Def)
@@ -130,7 +126,7 @@ compiler.no_codegen = true
 source = Compiler::Source.new(filename, File.read(filename))
 result = compiler.compile(source, "not-used")
 
-visitor = CollectDefsVisitor.new # (result.program)
+visitor = CollectDefsVisitor.new
 visitor.process(result)
 
 RemoveUsedDefsVisitor.new(visitor.all_defs).process(result)
